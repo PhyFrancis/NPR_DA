@@ -1,13 +1,12 @@
-function idx = cIdxMap(AV,aabb)
-	off = 0;
+function idx = cIdxMap(AV)
 	if AV == 'VV'
-		off = 1;
+		idx = 1;
 	elseif AV == 'AA'
-		off = 2;
+		idx = 2;
 	elseif AV == 'AV'
-		off = 3;
+		idx = 3;
 	elseif AV == 'VA'
-		off = 4;
+		idx = 4;
 	else 
 		fprintf('%s not supported, should be VV, AA, AV, or VA\n', AV);
 	end

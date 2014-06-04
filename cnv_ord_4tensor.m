@@ -25,5 +25,9 @@ function cnv_tensor = cnv_ord_4tensor(tensor, origOrd)
 			end
 		end
 	end
-						
+
+	clear i;
+	clear j;
+	clear k;
+	clear l;
 end

@@ -1,6 +1,5 @@
-function bulk_data = load_bulk_file(place,name,all_traj)
+function [bulk_data nConf] = load_bulk_file(place,name,all_traj)
 	% TODO add description here
-	%
 	
 	bulk_data = [];
 	nConf = 0;
@@ -13,17 +12,11 @@ function bulk_data = load_bulk_file(place,name,all_traj)
 			continue;
 		end
 
-		% This is just doing average
-		if isempty(bulk_data) 
-			bulk_data = [bulk_data, importdata(fn)];
-		else 
-			bulk_data = bulk_data + importdata(fn);
-		end
+		bulk_data = [bulk_data, importdata(fn)];
 
 		nConf = nConf + 1;
 	end
 
 	fprintf('Number of %s files:\t%d\n',name,nConf);
-	bulk_data = bulk_data / nConf;
 
 end

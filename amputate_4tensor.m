@@ -12,4 +12,8 @@ function tensor_amp = amputate_4tensor(tensor, leg_p1, leg_p2)
 
 	tensor_amp = kron(M1, M2.') * tensor * kron(M1.', M2);
 
+	clear g5;
+	clear M1;
+	clear M2;
+
 end

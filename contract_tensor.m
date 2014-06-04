@@ -11,36 +11,28 @@ function y = contract_tensor(spin_tensor,op,eo)
 	persistent gamma;
 	if isempty(gamma)
 		load GammaMatrix; 
-		fprintf('GammaMatrix loaded.\n');
+		fprintf('contract_tensor:: GammaMatrix loaded.\n');
 	end
 
 	y = 0;
 	for dir = 1:4
-		if op == 'LL'
-			if eo == 1
-				tensor_tmp = outer_prod(gamma{dir,1}.', gamma{dir,1}.') +...
-					           outer_prod((gamma{5,1} * gamma{dir,1}).', (gamma{5,1} * gamma{dir,1}).');
-			elseif eo == 2
-				tensor_tmp = (-1) * outer_prod((gamma{5,1} * gamma{dir,1}).', gamma{dir,1}.') +...
-					           (-1) * outer_prod(gamma{dir,1}.', (gamma{5,1} * gamma{dir,1}).');
-			else 
-				fprintf('contract_tensor::%d is neither even nor odd.\n',eo);
-			end
-		elseif op == 'LR'
-			% tensor_tmp = outer_prod(((eye(4) - gamma{5,1}) * gamma{dir,1}).', ...
-			%                         ((eye(4) + gamma{5,1}) * gamma{dir,1}).');
-			if eo == 1
-				tensor_tmp = (+1) * outer_prod(gamma{dir,1}.', gamma{dir,1}.') +...
-					           (-1) * outer_prod((gamma{5,1} * gamma{dir,1}).', (gamma{5,1} * gamma{dir,1}).');
-			elseif eo == 2
-				tensor_tmp = (-1) * outer_prod((gamma{5,1} * gamma{dir,1}).', gamma{dir,1}.') +...
-					           (+1) * outer_prod(gamma{dir,1}.', (gamma{5,1} * gamma{dir,1}).');
-			else fprintf('contract_tensor::%d is neither even nor odd.\n',eo);
-			end
+		if     op == 'LL' & eo == 1
+			tensor_tmp = outer_prod(gamma{dir,1}.', gamma{dir,1}.') +...
+				outer_prod((gamma{5,1} * gamma{dir,1}).', (gamma{5,1} * gamma{dir,1}).');
+		elseif op == 'LL' & eo == 2
+			tensor_tmp = (-1) * outer_prod((gamma{5,1} * gamma{dir,1}).', gamma{dir,1}.') +...
+				(-1) * outer_prod(gamma{dir,1}.', (gamma{5,1} * gamma{dir,1}).');
+		elseif op == 'LR' & eo == 1
+			tensor_tmp = (+1) * outer_prod(gamma{dir,1}.', gamma{dir,1}.') +...
+				(-1) * outer_prod((gamma{5,1} * gamma{dir,1}).', (gamma{5,1} * gamma{dir,1}).');
+		elseif op == 'LR' & eo == 2
+			tensor_tmp = (-1) * outer_prod((gamma{5,1} * gamma{dir,1}).', gamma{dir,1}.') +...
+				(+1) * outer_prod(gamma{dir,1}.', (gamma{5,1} * gamma{dir,1}).');
 		else 
-			fprintf('%s not supported in contarct_tensor\n',op);
+			fprintf('contract_tensor::either operation %s or even-odd %d not supported.\n',op,eo);
 		end
 		y = y + sum(sum(spin_tensor.*tensor_tmp));
 	end
 
+	clearvars -except y;
 end

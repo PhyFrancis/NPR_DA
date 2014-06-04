@@ -18,7 +18,5 @@ function M77 = combineQdotH(M72)
 		end
 	end
 
-	clear eo;
-	clear Q;
-	clear i;
+	clearvars -except M77;
 end

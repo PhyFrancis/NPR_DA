@@ -20,8 +20,5 @@ function tensor_amp = amputate_2tensor(tensor, leg_p1, leg_p2)
 		tensor_amp = [tensor_amp, M1 * tensor(:,i*12+[1:12]) * M2];
 	end
 
-	clear nBlock;
-	clear M1;
-	clear M2;
-
+	clearvars -except tensor_amp gamma;
 end

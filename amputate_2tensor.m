@@ -3,7 +3,7 @@ function tensor_amp = amputate_2tensor(tensor, leg_p1, leg_p2)
 	persistent gamma;
 	if isempty(gamma)
 		load GammaMatrix; 
-		fprintf('GammaMatrix loaded.\n');
+		fprintf('amputate_2tensor::GammaMatrix loaded.\n');
 	end
 
 	g5 = toSCMatrix(gamma{5,1});

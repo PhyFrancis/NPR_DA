@@ -3,13 +3,7 @@
 clear all;
 
 % initialize fitting parameters:
-% place = '/home/daiqian/BGQ/NPR/16nt/';
-place = '/home/daiqian/BGQ/NPR/Qi_16nt/';
-all_traj = [1000:40:1960];
-bulk_file_name_even = ['k2pipiNPR_even_p0_p1.txt'];
-bulk_file_name_odd = ['k2pipiNPR_odd_p0_p1.txt'];
-leg_p1_name = ['legs_p0.txt'];
-leg_p2_name = ['legs_p1.txt'];
+run('conf.m');
 
 % load data: 
 [bulk_even n1] = load_bulk_file(place,bulk_file_name_even,all_traj);
@@ -67,9 +61,7 @@ M72 = combineQdotE(C);
 % calculate the 7-by-7 M_ij = Q_i H_j 
 M77 = combineQdotH(M72);
   
-% calculate the 7-by-7 Z = F * M^-1 * Z_q^2
-% TODO include Z_q
-
+% calculate the 7-by-7 Z = F * M^-1
 load F77Matrix;
 Z77inv = cell(n1,2);
 Z77inv_mean = cell(1,2);
@@ -93,3 +85,14 @@ for eo = 1:2
 	Z77inv_mean{1,eo}
 	Z77inv_std{1,eo}
 end
+
+Z77 = cell(1,2);
+Z77{1,1} = inv(Z77inv_mean{1,1});
+Z77{1,2} = inv(Z77inv_mean{1,2});
+save(['result/Z77Matrix',label],'Z77');
+
+% calculate Zq
+Zq1 = compute_Zq(jackknifed_leg_p1,p1);
+Zq2 = compute_Zq(jackknifed_leg_p2,p2);
+Zq_avg = real(mean((Zq1 + Zq2) / 2.0));
+save(['result/Zq',label],'Zq_avg');

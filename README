@@ -1,0 +1,4 @@
+'npr.m' is the workforce, it generates 7-by-7 Lat->RI matrix and Zq. It saves the results in 'result/'
+before running 'npr.m', should check 'conf.m', which contains the basic parameters that 'npr.m' will need/
+
+Authored by Daiqian. June-12-2014

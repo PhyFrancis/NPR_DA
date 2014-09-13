@@ -80,17 +80,13 @@ end
 subtractionCoeff = determineSubCoeff(C_sub, jackknifed_leg_p1, jackknifed_leg_p2, p1, p2);
 
 % calculate the 7-by-2 M_ij = Q_i E_j (each M_ij is a 4-spin-color-tensor)
-M72 = combineQdotE(C); 
 if doSubtraction == 1
-	S72 = combineQdotE_sub(C, subtractionCoeff);
-	for eo = 1:2
-		for E = 1:2
-			for q = 1:7
-				M72{eo,1}{q,E} = M72{eo,1}{q,E} + S72{eo,1}{q,E};
-			end
-		end
-	end
+	S = applySubCoeff(C, subtractionCoeff); % TODO implement it
+	M72 = combineQdotE(S); 
+else 
+	M72 = combineQdotE(C); 
 end
+
 
 % calculate the 7-by-7 M_ij = Q_i H_j 
 M77 = combineQdotH(M72);

@@ -11,6 +11,5 @@ function tensors_amp = amputate_4tensors(tensors, legs_p1, legs_p2)
 		tensors_amp(:,i*144+[1:144]) = amputate_4tensor(tensors(:,i*144+[1:144]),legs_p1(:,i*12+[1:12]),legs_p2(:,i*12+[1:12]));
 	end
 
-	clear nBlock;
-	clear i;
+	clearvars -except tensors_amp;
 end

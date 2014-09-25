@@ -26,7 +26,7 @@ for i = 1:4
 	jackknifed_4tensor{i+4,1} = amputate_4tensors(jackknife(load_tensor(bulk_odd ,i),n2),jackknifed_leg_p1,jackknifed_leg_p2); % AV, AVm, VA, VAm
 end
 
-spec = load_matrix(bulk_even,1); % could also use bulk_odd.
+spec = load_matrix(bulk_even,1); % spectator propagator, could also use bulk_odd.
  
 C_left = cell(22,1); % 1  ~ 16 : left part of diagrams, without spectator quark.
                      % 17 ~ 22 : B1, B2, and B3 to be subtracted.

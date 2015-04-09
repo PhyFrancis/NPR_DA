@@ -13,11 +13,17 @@
 % p2 = [2,2,0,0] * (2*3.1415926 / 16);
 % label = ['1.92GeV'];
 
-all_traj = [1004:32:1800];
-place = '/home/daiqian/BGQ/NPR/32nt_0440_4400_ml0.01/'; 
-p1 = [0,4,4,0] * (2*3.1415926 / 32);
-p2 = [4,4,0,0] * (2*3.1415926 / 32);
-label = ['1.52GeV'];
+% all_traj = [1004:32:1800];
+% place = '/home/daiqian/BGQ/NPR/32nt_0440_4400_ml0.01/'; 
+% p1 = [0,4,4,0] * (2*3.1415926 / 32);
+% p2 = [4,4,0,0] * (2*3.1415926 / 32);
+% label = ['1.52GeV'];
+
+all_traj = [1000:20:1080];
+place = '/home/daiqian/BGQ/NPR/NPR_checkJulien/'; 
+p1 = [2,2,0,0] * (2*3.1415926 / 16);
+p2 = [0,2,2,0] * (2*3.1415926 / 16);
+label = ['check_Julien'];
 
 bulk_file_name_even = ['k2pipiNPR_even_p0_p1.txt'];
 bulk_file_name_odd = ['k2pipiNPR_odd_p0_p1.txt'];

@@ -45,7 +45,7 @@ for i = 1:3
 	C_sub{i+19,1} = load_matrix_sub(sub_bulk_odd ,i+8); % same as bulk_odd
 end
 
-% calculate jackknifed C1~C6:
+% calculate jackknifed C1~C9:
 C = cell(4,9); % [VV,AA,AV,VA] for C1 
                %  ... ... ...  for C2 
                %  ... ... ...  for C3 
@@ -81,7 +81,7 @@ subtractionCoeff = determineSubCoeff(C_sub, jackknifed_leg_p1, jackknifed_leg_p2
 
 % calculate the 7-by-2 M_ij = Q_i E_j (each M_ij is a 4-spin-color-tensor)
 if doSubtraction == 1
-	S = applySubCoeff(C, subtractionCoeff); % TODO implement it
+	S = applySubCoeff(C, subtractionCoeff); 
 	M72 = combineQdotE(S); 
 else 
 	M72 = combineQdotE(C); 

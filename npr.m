@@ -87,8 +87,6 @@ else
 	M72 = combineQdotE(C); 
 end
 
-combine_subCoefficient(subtractionCoeff);
-
 % calculate the 7-by-7 M_ij = Q_i H_j 
 M77 = combineQdotH(M72);
   

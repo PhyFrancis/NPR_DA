@@ -77,12 +77,13 @@ for eo = 1:2
 end
 
 % calculate subtraction coefficients before B1, B2, and B3 operators
-subtractionCoeff = determineSubCoeff(C_sub, jackknifed_leg_p1, jackknifed_leg_p2, p1, p2);
+subCoeff_byGraph = determineSubCoeff(C_sub, jackknifed_leg_p1, jackknifed_leg_p2, p1, p2);
+subCoeff_byOp = combine_sub(subCoeff_byGraph);
 
 % calculate the 7-by-2 M_ij = Q_i E_j (each M_ij is a 4-spin-color-tensor)
 M72 = combineQdotE(C); 
 if doSubtraction == 1
-	S72 = combineQdotE_sub(C, subtractionCoeff);
+	S72 = combineQdotE_sub(C, subCoeff_byOp);
 	for eo = 1:2
 		for E = 1:2
 			for q = 1:7

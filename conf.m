@@ -1,11 +1,17 @@
 % Warining:
 % Qi's numbers are not considering 3.2 in propagator
 
-all_traj = [1000:40:1960];
-place = '/home/daiqian/BGQ/NPR/Qi_16nt_2.15GeV/';
-p1 = [1,1,2,4/2] * (2*3.1415926 / 16);
-p2 = [2,1,2,-2/2] * (2*3.1415926 / 16);
-label = ['2.15GeV'];
+all_traj = [1000:20:1080];
+place = '/home/daiqian/BGQ/NPR/NPR_checkJulien/'; 
+p1 = [2,2,0,0] * (2*3.1415926 / 16);
+p2 = [0,2,2,0] * (2*3.1415926 / 16);
+label = ['check_Julien'];
+
+% all_traj = [1000:40:1960];
+% place = '/home/daiqian/BGQ/NPR/Qi_16nt_2.15GeV/';
+% p1 = [1,1,2,4/2] * (2*3.1415926 / 16);
+% p2 = [2,1,2,-2/2] * (2*3.1415926 / 16);
+% label = ['2.15GeV'];
 
 % all_traj = [1000:40:1120];
 % place = '/home/daiqian/BGQ/NPR/Qi_16nt_1.9GeV/'; 

@@ -117,14 +117,38 @@ for eo = 1:2
 			Z77inv_std{1,eo}(i,j) = std(elem_array,1) * sqrt(n1-1);
 		end
 	end
-	Z77inv_mean{1,eo}
-	Z77inv_std{1,eo}
+	% Z77inv_mean{1,eo}
+	% Z77inv_std{1,eo}
 end
 
-Z77 = cell(1,2);
-Z77{1,1} = inv(Z77inv_mean{1,1});
-Z77{1,2} = inv(Z77inv_mean{1,2});
-save(['result/Z77Matrix',label,'.mat'],'Z77');
+Z77 = cell(n1,2);
+Z77_mean = cell(1,2);
+Z77_std  = cell(1,2);
+for eo = 1:2
+	Z77_mean{1,eo} = zeros(7,7);
+	Z77_std{1,eo}  = zeros(7,7);
+	for i = 1:n1
+		Z77{i,eo} = real(F77 * inv(M77{i,eo}));
+	end
+	for i = 1:7
+		for j = 1:7
+			elem_array = [];
+			for conf = 1:n1
+				elem_array = [elem_array, Z77{conf,eo}(i,j)];
+			end
+			Z77_mean{1,eo}(i,j) = mean(elem_array);
+			Z77_std{1,eo}(i,j) = std(elem_array,1) * sqrt(n1-1);
+		end
+	end
+	Z77_mean{1,eo}
+	Z77_std{1,eo}
+end
+
+% TODO uncomment the four lines
+% Z77 = cell(1,2);
+% Z77{1,1} = inv(Z77inv_mean{1,1});
+% Z77{1,2} = inv(Z77inv_mean{1,2});
+% save(['result/Z77Matrix',label,'.mat'],'Z77');
 
 % calculate Zq
 Zq1 = compute_Zq(jackknifed_leg_p1,p1);

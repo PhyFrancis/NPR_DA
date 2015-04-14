@@ -138,10 +138,10 @@ end
 % 	Z77_std{1,eo}
 % end
 
-Z77 = cell(1,2);
-Z77{1,1} = inv(Z77inv_mean{1,1});
-Z77{1,2} = inv(Z77inv_mean{1,2});
-save(['result/Z77Matrix',label,'.mat'],'Z77');
+% Z77 = cell(1,2);
+% Z77{1,1} = inv(Z77inv_mean{1,1});
+% Z77{1,2} = inv(Z77inv_mean{1,2});
+% save(['result/Z77Matrix',label,'.mat'],'Z77');
 
 % calculate Zq
 Zq1 = compute_Zq(jackknifed_leg_p1,p1);

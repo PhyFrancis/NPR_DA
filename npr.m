@@ -97,59 +97,23 @@ end
 % calculate the 7-by-7 M_ij = Q_i H_j 
 M77 = combineQdotH(M72);
   
-% calculate the 7-by-7 Z = F * M^-1
-load F77Matrix;
-Z77inv = cell(n1,2);
-Z77inv_mean = cell(1,2);
-Z77inv_std  = cell(1,2);
-for eo = 1:2
-	Z77inv_mean{1,eo} = zeros(7,7);
-	Z77inv_std{1,eo}  = zeros(7,7);
-	for i = 1:n1
-		Z77inv{i,eo} = real(M77{i,eo} * inv(F77));
-	end
-	for i = 1:7
-		for j = 1:7
-			elem_array = [];
-			for conf = 1:n1
-				elem_array = [elem_array, Z77inv{conf,eo}(i,j)];
-			end
-			Z77inv_mean{1,eo}(i,j) = mean(elem_array);
-			Z77inv_std{1,eo}(i,j) = std(elem_array,1) * sqrt(n1-1);
-		end
-	end
-	Z77inv_mean{1,eo}
-	Z77inv_std{1,eo}
-end
+% calculate the 7-by-7 Z = F * M^-1 in gamma-mu scheme
+[Z77inv_mean, Z77inv_std] = calZ77inv(M77,'GammaMu');
+[Z77_mean, Z77_std] = calZ77(M77, 'GammaMu');
+Z77 = cell(1,2);
+Z77{1,1} = inv(Z77inv_mean{1,1});
+Z77{1,2} = inv(Z77inv_mean{1,2});
+save(['result/Z77Matrix_gammaMu_',label,'.mat'],'Z77');
 
-Z77 = cell(n1,2);
-Z77_mean = cell(1,2);
-Z77_std  = cell(1,2);
-for eo = 1:2
-	Z77_mean{1,eo} = zeros(7,7);
-	Z77_std{1,eo}  = zeros(7,7);
-	for i = 1:n1
-		Z77{i,eo} = real(F77 * inv(M77{i,eo}));
-	end
-	for i = 1:7
-		for j = 1:7
-			elem_array = [];
-			for conf = 1:n1
-				elem_array = [elem_array, Z77{conf,eo}(i,j)];
-			end
-			Z77_mean{1,eo}(i,j) = mean(elem_array);
-			Z77_std{1,eo}(i,j) = std(elem_array,1) * sqrt(n1-1);
-		end
-	end
-	Z77_mean{1,eo}
-	Z77_std{1,eo}
-end
+% calculate the 7-by-7 Z = F * M^-1 in q-slash scheme
+M77 = combineQdotP(C);
+[Z77inv_mean, Z77inv_std] = calZ77inv(M77,'QSlash');
+[Z77_mean, Z77_std] = calZ77(M77,'QSlash');
+Z77 = cell(1,2);
+Z77{1,1} = inv(Z77inv_mean{1,1});
+Z77{1,2} = inv(Z77inv_mean{1,2});
+save(['result/Z77Matrix_qSlash_',label,'.mat'],'Z77');
 
-% TODO uncomment the four lines
-% Z77 = cell(1,2);
-% Z77{1,1} = inv(Z77inv_mean{1,1});
-% Z77{1,2} = inv(Z77inv_mean{1,2});
-% save(['result/Z77Matrix',label,'.mat'],'Z77');
 
 % Zq in q-slash scheme
 Zq1 = compute_Zq_qSlash(jackknifed_leg_p1,p1);

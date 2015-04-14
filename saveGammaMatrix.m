@@ -4,6 +4,8 @@
 fn = 'GammaMatrix';
 gamma = cell(5,1);
 
+clear i;
+
 % gamma1 (X)
 gamma{1,1} = [ 0, 0, 0, i ;
                0, 0, i, 0 ;

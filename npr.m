@@ -81,7 +81,8 @@ end
 subCoeff_byGraph = determineSubCoeff(C_sub, jackknifed_leg_p1, jackknifed_leg_p2, p1, p2);
 subCoeff_byOp = combine_sub(subCoeff_byGraph);
 
-% calculate the 7-by-2 M_ij = Q_i E_j (each M_ij is a 4-spin-color-tensor)
+% 1. calculate the 7-by-2 M_ij = Q_i E_j (each M_ij is a 4-spin-color-tensor)
+%    method 1: operator-by-operator subtraction
 M72 = combineQdotE(C); 
 if doSubtraction == 1
 	S72 = combineQdotE_sub(C, subCoeff_byOp);
@@ -93,11 +94,17 @@ if doSubtraction == 1
 		end
 	end
 end
+%    method 2:  graph-by-graph subtraction
+%  if doSubtraction == 1
+%  	S = applySubCoeff(C, subCoeff_byGraph); 
+%  	M72 = combineQdotE(S); 
+%  else 
+%  	M72 = combineQdotE(C); 
+%  end
 
-% calculate the 7-by-7 M_ij = Q_i H_j 
+%   7-by-7 M_ij = Q_i H_j 
 M77 = combineQdotH(M72);
-  
-% calculate the 7-by-7 Z = F * M^-1 in gamma-mu scheme
+%   7-by-7 Z = F * M^-1 in gamma-mu scheme
 [Z77inv_mean, Z77inv_std] = calZ77inv(M77,'GammaMu');
 [Z77_mean, Z77_std] = calZ77(M77, 'GammaMu');
 Z77 = cell(1,2);
@@ -105,8 +112,13 @@ Z77{1,1} = inv(Z77inv_mean{1,1});
 Z77{1,2} = inv(Z77inv_mean{1,2});
 save(['result/Z77Matrix_gammaMu_',label,'.mat'],'Z77');
 
-% calculate the 7-by-7 Z = F * M^-1 in q-slash scheme
-M77 = combineQdotP(C);
+% 2. calculate the 7-by-7 Z = F * M^-1 in q-slash scheme
+if doSubtraction == 1
+	S = applySubCoeff(C, subCoeff_byGraph); 
+else 
+	S = C;
+end
+M77 = combineQdotP(S);
 [Z77inv_mean, Z77inv_std] = calZ77inv(M77,'QSlash');
 [Z77_mean, Z77_std] = calZ77(M77,'QSlash');
 Z77 = cell(1,2);
@@ -115,11 +127,11 @@ Z77{1,2} = inv(Z77inv_mean{1,2});
 save(['result/Z77Matrix_qSlash_',label,'.mat'],'Z77');
 
 
-% Zq in q-slash scheme
+% 3. Zq in q-slash scheme
 Zq1 = compute_Zq_qSlash(jackknifed_leg_p1,p1);
 Zq2 = compute_Zq_qSlash(jackknifed_leg_p2,p2);
 Zq_avg = real(mean((Zq1 + Zq2) / 2.0));
 save(['result/Zq_qSlash_',label,'.mat'],'Zq_avg');
-% Zq in gamma-mu scheme
+% 4. Zq in gamma-mu scheme
 Zq_avg = compute_Zq_gammaMu(bilinear,jackknifed_leg_p1,jackknifed_leg_p2,Z_V,Z_A);
 save(['result/Zq_gammaMu_',label,'.mat'],'Zq_avg');

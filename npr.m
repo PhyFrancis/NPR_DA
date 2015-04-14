@@ -99,7 +99,7 @@ for eo = 1:2
 	Z77inv_mean{1,eo} = zeros(7,7);
 	Z77inv_std{1,eo}  = zeros(7,7);
 	for i = 1:n1
-		Z77inv{i,eo} = real(M77{i,eo} * inv(F77));
+		Z77inv{i,eo} = real(M77{i,eo} * inv(F77_gammaMu));
 	end
 	for i = 1:7
 		for j = 1:7

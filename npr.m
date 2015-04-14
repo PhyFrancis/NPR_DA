@@ -46,7 +46,7 @@ for i = 1:3
 	C_sub{i+19,1} = load_matrix_sub(sub_bulk_odd ,i+8); % same as bulk_odd
 end
 
-% calculate jackknifed C1~C6:
+% calculate jackknifed C1~C9:
 C = cell(4,9); % [VV,AA,AV,VA] for C1 
                %  ... ... ...  for C2 
                %  ... ... ...  for C3 

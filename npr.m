@@ -105,12 +105,8 @@ end
 %   7-by-7 M_ij = Q_i H_j 
 M77 = combineQdotH(M72);
 %   7-by-7 Z = F * M^-1 in gamma-mu scheme
-[Z77inv_mean, Z77inv_std] = calZ77inv(M77,'GammaMu');
-[Z77_mean, Z77_std] = calZ77(M77, 'GammaMu');
-Z77 = cell(1,2);
-Z77{1,1} = inv(Z77inv_mean{1,1});
-Z77{1,2} = inv(Z77inv_mean{1,2});
-save(['result/Z77Matrix_gammaMu_',label,'.mat'],'Z77');
+[Z77inv_mean, Z77inv_std] = calZ77inv(M77,'GammaMu',label);
+[Z77_mean, Z77_std] = calZ77(M77, 'GammaMu',label);
 
 % 2. calculate the 7-by-7 Z = F * M^-1 in q-slash scheme
 if doSubtraction == 1
@@ -119,19 +115,16 @@ else
 	S = C;
 end
 M77 = combineQdotP(S);
-[Z77inv_mean, Z77inv_std] = calZ77inv(M77,'QSlash');
-[Z77_mean, Z77_std] = calZ77(M77,'QSlash');
-Z77 = cell(1,2);
-Z77{1,1} = inv(Z77inv_mean{1,1});
-Z77{1,2} = inv(Z77inv_mean{1,2});
-save(['result/Z77Matrix_qSlash_',label,'.mat'],'Z77');
+[Z77inv_mean, Z77inv_std] = calZ77inv(M77,'QSlash',label);
+[Z77_mean, Z77_std] = calZ77(M77,'QSlash',label);
 
 
+mkdir(['result/',label]);
 % 3. Zq in q-slash scheme
 Zq1 = compute_Zq_qSlash(jackknifed_leg_p1,p1);
 Zq2 = compute_Zq_qSlash(jackknifed_leg_p2,p2);
 Zq_avg = real(mean((Zq1 + Zq2) / 2.0));
-save(['result/Zq_qSlash_',label,'.mat'],'Zq_avg');
+save(['result/',label,'/Zq_QSlash.mat'],'Zq_avg');
 % 4. Zq in gamma-mu scheme
 Zq_avg = compute_Zq_gammaMu(bilinear,jackknifed_leg_p1,jackknifed_leg_p2,Z_V,Z_A);
-save(['result/Zq_gammaMu_',label,'.mat'],'Zq_avg');
+save(['result/',label,'/Zq_GammaMu.mat'],'Zq_avg');

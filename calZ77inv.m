@@ -1,4 +1,4 @@
-function [Z77inv_mean, Z77inv_std] = calZ77inv(M77,scheme)
+function [Z77inv_mean, Z77inv_std] = calZ77inv(M77,scheme,label)
 
 	load F77Matrix;
 	if strcmp(scheme,'GammaMu')
@@ -35,4 +35,11 @@ function [Z77inv_mean, Z77inv_std] = calZ77inv(M77,scheme)
 		Z77inv_mean{1,eo}
 		Z77inv_std{1,eo}
 	end
+
+	Z77 = cell(1,2);
+	Z77{1,1} = inv(Z77inv_mean{1,1});
+	Z77{1,2} = inv(Z77inv_mean{1,2});
+
+	mkdir(['result/',label]);
+	save(['result/',label,'/Z77Matrix_',scheme,'.mat'],'Z77');
 end

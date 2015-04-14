@@ -1,4 +1,4 @@
-function [Z77_mean, Z77_std] = calZ77(M77,scheme)
+function [Z77_mean, Z77_std] = calZ77(M77,scheme,label)
 
 	load F77Matrix;
 	if strcmp(scheme,'GammaMu')
@@ -36,4 +36,7 @@ function [Z77_mean, Z77_std] = calZ77(M77,scheme)
 		Z77_std{1,eo}
 
 	end
+
+	mkdir(['result/',label]);
+	save(['result/',label,'/Z77_JACK_',scheme,'.mat'],'Z77');
 end

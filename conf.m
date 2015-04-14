@@ -1,11 +1,11 @@
 % Warining:
 % Qi's numbers are not considering 3.2 in propagator
 
-all_traj = [1000:20:1080];
-place = '/home/daiqian/BGQ/NPR/NPR_checkJulien/'; 
-p1 = [2,2,0,0] * (2*3.1415926 / 16);
-p2 = [0,2,2,0] * (2*3.1415926 / 16);
-label = ['check_Julien'];
+% all_traj = [1000:20:1080];
+% place = '/home/daiqian/BGQ/NPR/NPR_checkJulien/'; 
+% p1 = [2,2,0,0] * (2*3.1415926 / 16);
+% p2 = [0,2,2,0] * (2*3.1415926 / 16);
+% label = ['check_Julien'];
 
 % all_traj = [1000:40:1960];
 % place = '/home/daiqian/BGQ/NPR/Qi_16nt_2.15GeV/';
@@ -23,18 +23,21 @@ label = ['check_Julien'];
 % place = '/home/daiqian/BGQ/NPR/32nt_0440_4400_ml0.01/'; 
 % p1 = [0,4,4,0] * (2*3.1415926 / 32);
 % p2 = [4,4,0,0] * (2*3.1415926 / 32);
+% Z_V = 0.6728; Z_A = 0.68778;
 % label = ['1.52GeV'];
 
-% all_traj = [1064:8:2000];
-% place = '/home/daiqian/BGQ/NPR/32nt_0440_4400_ml0.01/'; 
-% p1 = [0,4,4,0] * (2*3.1415926 / 32);
-% p2 = [4,4,0,0] * (2*3.1415926 / 32);
-% label = ['1.52GeV'];
+all_traj = [1064:8:2000];
+place = '/home/daiqian/BGQ/NPR/32nt_0440_4400_ml0.01/'; 
+p1 = [0,4,4,0] * (2*3.1415926 / 32);
+p2 = [4,4,0,0] * (2*3.1415926 / 32);
+Z_V = 0.6728; Z_A = 0.68778;
+label = ['1.52GeV'];
 
 bulk_file_name_even = ['k2pipiNPR_even_p0_p1.txt'];
 bulk_file_name_odd = ['k2pipiNPR_odd_p0_p1.txt'];
 sub_bulk_file_name_even = ['subtractionCoeff_even_p0_p1.txt'];
 sub_bulk_file_name_odd = ['subtractionCoeff_odd_p0_p1.txt'];
+bilinear_file_name = ['bilinear_p0_p1.txt'];
 leg_p1_name = ['legs_p0.txt'];
 leg_p2_name = ['legs_p1.txt'];
 doSubtraction = 1; % 1:do subtraction; 0:don't do subtraction

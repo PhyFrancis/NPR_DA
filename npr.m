@@ -12,8 +12,9 @@ run('conf.m');
 [bulk_leg_p2 n4] = load_bulk_file(place,leg_p2_name,all_traj); % S(p2)
 [sub_bulk_even n5] = load_bulk_file(place,sub_bulk_file_name_even,all_traj);
 [sub_bulk_odd  n6] = load_bulk_file(place,sub_bulk_file_name_odd,all_traj);
+[bilinear n7] = load_bulk_file(place,bilinear_file_name,all_traj);
 
-if ~isequaln(n1,n2,n3,n4,n5,n6)
+if ~isequaln(n1,n2,n3,n4,n5,n6,n7)
 	fprintf('Files numbers dont match\n')
 end
 
@@ -117,8 +118,8 @@ for eo = 1:2
 			Z77inv_std{1,eo}(i,j) = std(elem_array,1) * sqrt(n1-1);
 		end
 	end
-	% Z77inv_mean{1,eo}
-	% Z77inv_std{1,eo}
+	Z77inv_mean{1,eo}
+	Z77inv_std{1,eo}
 end
 
 Z77 = cell(n1,2);
@@ -150,8 +151,11 @@ end
 % Z77{1,2} = inv(Z77inv_mean{1,2});
 % save(['result/Z77Matrix',label,'.mat'],'Z77');
 
-% calculate Zq
-Zq1 = compute_Zq(jackknifed_leg_p1,p1);
-Zq2 = compute_Zq(jackknifed_leg_p2,p2);
+% Zq in q-slash scheme
+Zq1 = compute_Zq_qSlash(jackknifed_leg_p1,p1);
+Zq2 = compute_Zq_qSlash(jackknifed_leg_p2,p2);
 Zq_avg = real(mean((Zq1 + Zq2) / 2.0));
-save(['result/Zq',label,'.mat'],'Zq_avg');
+save(['result/Zq_qSlash_',label,'.mat'],'Zq_avg');
+% Zq in gamma-mu scheme
+Zq_avg = compute_Zq_gammaMu(bilinear,jackknifed_leg_p1,jackknifed_leg_p2,Z_V,Z_A);
+save(['result/Zq_gammaMu_',label,'.mat'],'Zq_avg');

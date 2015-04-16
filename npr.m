@@ -121,10 +121,11 @@ M77 = combineQdotP(S);
 
 mkdir(['result/',label]);
 % 3. Zq in q-slash scheme
-Zq1 = compute_Zq_qSlash(jackknifed_leg_p1,p1);
-Zq2 = compute_Zq_qSlash(jackknifed_leg_p2,p2);
-Zq_avg = real(mean((Zq1 + Zq2) / 2.0));
+% Zq1 = compute_Zq_prop(jackknifed_leg_p1,p1);
+% Zq2 = compute_Zq_prop(jackknifed_leg_p2,p2);
+% Zq_avg = real(mean((Zq1 + Zq2) / 2.0));
+Zq_avg = compute_Zq(bilinear,jackknifed_leg_p1,jackknifed_leg_p2,Z_V,Z_A,'QSlash',p1-p2);
 save(['result/',label,'/Zq_QSlash.mat'],'Zq_avg');
 % 4. Zq in gamma-mu scheme
-Zq_avg = compute_Zq_gammaMu(bilinear,jackknifed_leg_p1,jackknifed_leg_p2,Z_V,Z_A);
+Zq_avg = compute_Zq(bilinear,jackknifed_leg_p1,jackknifed_leg_p2,Z_V,Z_A,'GammaMu',p1-p2);
 save(['result/',label,'/Zq_GammaMu.mat'],'Zq_avg');

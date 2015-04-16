@@ -1,4 +1,6 @@
-function Zq = compute_Zq(jackknifed_leg_p1,p1)
+function Zq = compute_Zq_prop(jackknifed_leg_p1,p1)
+	% this is computing Zq directly from quark propagator, in q-slash scheme
+	
 	persistent gamma;
 	if isempty(gamma)
 		load GammaMatrix; 
